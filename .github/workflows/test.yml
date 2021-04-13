@@ -26,9 +26,15 @@ jobs:
     - name: Install Dependencies
       run: |
           composer update --${{ matrix.dependency-version }} --prefer-dist --no-interaction --no-suggest
-    - name: Execute tests (Unit and Feature)
-      run: vendor/bin/phpunit --coverage-text
     - name: Static analysis with PHPStan
       run: vendor/bin/phpstan analyse
     - name: Coding style PSR12 Check
       run: vendor/bin/phpcs
+    - name: Execute tests (Unit and Feature)
+      run: vendor/bin/phpunit --coverage-text --coverage_clover=clover.xml
+    - name: Upload coverage results to Coveralls
+      env:
+        COVERALLS_REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        composer global require php-coveralls/php-coveralls
+        php-coveralls --coverage_clover=clover.xml -v
