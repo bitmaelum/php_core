@@ -101,7 +101,7 @@ class Address
      */
     public function getHash(): string
     {
-        return Hash::fromData($this->localHash . $this->localPart);
+        return Hash::fromData($this->localHash . $this->orgHash);
     }
 
     /**
