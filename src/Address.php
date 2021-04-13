@@ -24,16 +24,15 @@ class Address
      */
     public static function fromString(string $address): self
     {
-        if (!preg_match(self::ADDRESS_REGEX, $address)) {
+        if (!preg_match(self::ADDRESS_REGEX, $address, $matches)) {
             throw AddressException::InvalidFormat();
         }
 
-        $parts = explode("@", $address);
-        if (count($parts) == 1) {
-            $parts[] = "";
+        if (count($matches) == 2) {
+            $matches[] = "";
         }
 
-        return new self($parts[0], $parts[1]);
+        return new self($matches[1], $matches[2]);
     }
 
     /**

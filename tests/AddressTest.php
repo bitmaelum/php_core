@@ -61,4 +61,19 @@ class AddressTest extends TestCase {
     {
         $this->assertFalse(Address::isValid($address));
     }
+
+    function testParts() {
+        $addr = Address::fromString("john@example!");
+
+        $this->assertEquals("john", $addr->getLocalPart());
+        $this->assertEquals("example", $addr->getOrgPart());
+
+        $this->assertEquals("96d9632f363564cc3032521409cf22a852f2032eec099ed5967c0d000cec607a", $addr->getLocalHash());
+        $this->assertEquals("50d858e0985ecc7f60418aaf0cc5ab587f42c2570a884095a9e8ccacd0f6545c", $addr->getOrgHash());
+
+
+        $addr = Address::fromString("john!");
+        $this->assertEquals("john", $addr->getLocalPart());
+        $this->assertEquals("", $addr->getOrgPart());
+    }
 }
