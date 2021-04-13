@@ -1,0 +1,33 @@
+{
+    "name": "bitmaelum/core",
+    "description": "Core functionality for BitMaelum",
+    "type": "library",
+    "require": {
+        "php": ">=7.3",
+        "ext-gmp": "*",
+        "paragonie/sodium_compat": "^1.14"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan": "^0.12",
+        "squizlabs/php_codesniffer": "^3.5"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joshua Thijssen",
+            "email": "jthijssen@noxlogic.nl"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "BitMaelum\\Core\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BitMaelum\\Core\\Tests\\": "tests"
+        }
+    },
+    "prefer-stable": true
+}
