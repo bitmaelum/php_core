@@ -2,12 +2,28 @@
 
 namespace BitMaelum\Core;
 
+use BitMaelum\Core\Exception\HashException;
+
 class Hash
 {
     protected const EMPTY_HASH = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855";
 
     /** @var string */
     protected $hash;
+
+    /**
+     * @param string $hash
+     * @return Hash
+     */
+    public static function direct(string $hash)
+    {
+        $hash = strtolower($hash);
+        if (!preg_match("/^[a-z0-9]{64}$/", $hash)) {
+            throw HashException::invalidHash();
+        }
+
+        return new self($hash);
+    }
 
     /**
      * @param string $data
@@ -60,6 +76,6 @@ class Hash
     {
         $target = self::fromData($localHash . $orgHash);
 
-        return hash_equals($target, $this->hash);
+        return hash_equals($target->getHash(), $this->hash);
     }
 }
