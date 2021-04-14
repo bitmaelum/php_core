@@ -17,8 +17,13 @@ class Otp
     {
         $timestamp = (floor(floor($time) / 30) * 30) . "000000000";
         $int64ts = gmp_init($timestamp);
-        $timestampBytes = hex2bin(gmp_strval($int64ts, 16));
+        $int64str = gmp_strval($int64ts, 16);
 
+        // Make sure str is even by padding with 0
+        if (strlen($int64str) % 2 == 1) {
+            $int64str = "0" . $int64str;
+        }
+        $timestampBytes = hex2bin($int64str);
         if ($timestampBytes === false) {
             throw OtpException::cannotGenerate();
         }
